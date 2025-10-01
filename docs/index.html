@@ -83,17 +83,20 @@
     const stored = localStorage.getItem('theme') || 'dark';
     if (stored === 'light') body.classList.add('theme-light');
 
-    const MERMAID_SRC = `flowchart LR
-      A9[Sequence 9: Seer] -->|Potion Advancement + Acting Method| A8[Sequence 8: Clown]
-      A9 --> B1[Divination & Perception]
-      B1 --> B2[Spirit Vision]
-      B1 --> B3[Dream Divination]
-      B1 --> B4[Ritual Magic (Basic)]
-      A8 --> C1[Dexterity & Control]
-      C1 --> C2[Balance & Agility]
-      C1 --> C3[Pain Suppression]
-      C1 --> C4[Emotion Masking]
-    `;
+  const MERMAID_SRC = `
+flowchart TD
+  A9["Sequence 9 — Seer"] -->|"Potion Advancement + Acting Method"| A8["Sequence 8 — Clown"]
+
+  A9 --> B1["Divination and Perception"]
+  B1 --> B2["Spirit Vision"]
+  B1 --> B3["Dream Divination"]
+  B1 --> B4["Ritual Magic Basic"]
+
+  A8 --> C1["Dexterity and Control"]
+  C1 --> C2["Balance and Agility"]
+  C1 --> C3["Pain Suppression"]
+  C1 --> C4["Emotion Masking"]
+`;
 
     async function renderMermaid(themeMode) {
       const theme = themeMode === 'light' ? 'default' : 'dark';

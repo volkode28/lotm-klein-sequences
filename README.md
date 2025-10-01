@@ -21,6 +21,27 @@ flowchart TD
   C1 --> C4[Emotion Masking]
 ```
 
+```mermaid
+mindmap
+  root((Seer Pathway))
+    Sequence 9: Seer
+      Divination
+      Spirit Vision
+      Ritual Basics
+    Sequence 8: Clown
+      Acrobatics
+      Pain Suppression
+      Emotion Masking
+```
+
+```mermaid
+timeline
+    title Klein’s Early Path
+    9 : "Seer" : Divination, spirit vision, rituals
+    8 : "Clown" : Agility, emotional control, first combat powers
+    7 : "Magician" : (next stage… beyond scope here)
+```
+
 ---
 
 ## 🪄 Sequence 9 — **Seer**

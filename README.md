@@ -10,15 +10,9 @@ It matches the scope of the story around **Episode 9: “Party”** — covering
 ## ⚙️ Pathway Progression
 
 ```mermaid
-flowchart LR
-  subgraph Seer_Pathway [Seer Pathway]
-    A9[Sequence 9: Seer]
-    A8[Sequence 8: Clown]
-  end
+flowchart TD
+  A9[Sequence 9: Seer] -->|Potion Advancement + Acting Method| A8[Sequence 8: Clown]
 
-  A9 -->|Potion Advancement + Acting Method| A8
-
-  %% Subdetails
   A9 --> B1[Divination & Perception]
   B1 --> B2[Spirit Vision]
   B1 --> B3[Dream Divination]

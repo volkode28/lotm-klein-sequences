@@ -12,41 +12,67 @@
       --card: rgba(255,255,255,0.06); --ring: rgba(255,255,255,0.12);
       --accent:#7dd3fc; --accent-2:#c084fc; --chip: rgba(255,255,255,0.08);
       --shadow: 0 6px 24px rgba(0,0,0,.25);
+      --mark-bg: #f59e0b33;
+      --mark-border: #f59e0b88;
     }
     .theme-light {
       --bg:#f7fafc; --bg-soft:#eef2f7; --fg:#0f172a; --muted:#5b6b7f;
       --card:rgba(255,255,255,.92); --ring: rgba(15,23,42,.08);
       --accent:#2563eb; --accent-2:#9333ea; --chip: rgba(2,6,23,.06);
       --shadow: 0 6px 24px rgba(0,0,0,.08);
+      --mark-bg:#fde68a80; --mark-border:#f59e0b99;
     }
+
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--fg);
-      background: radial-gradient(1200px 600px at -10% -10%, rgba(125,211,252,.15), transparent 60%),
-                  radial-gradient(900px 500px at 110% -10%, rgba(192,132,252,.15), transparent 60%), var(--bg);}
+    html,body{
+      height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--fg);
+      background:
+        radial-gradient(1200px 600px at -10% -10%, rgba(125,211,252,.15), transparent 60%),
+        radial-gradient(900px 500px at 110% -10%, rgba(192,132,252,.15), transparent 60%),
+        var(--bg);
+    }
     header{padding:2rem 1rem 1rem;text-align:center}
     .title{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;letter-spacing:.2px;margin:0 0 .3rem}
     .subtitle{color:var(--muted);margin:.25rem 0 0}
     .toolbar{display:flex;gap:.75rem;justify-content:center;align-items:center;margin-top:1rem;flex-wrap:wrap}
-    .btn,.chip{border:1px solid var(--ring);background:var(--card);color:var(--fg);padding:.55rem .8rem;border-radius:12px;cursor:pointer;user-select:none;transition:transform .08s ease, border-color .15s ease, background .15s ease}
+    .btn,.chip{
+      border:1px solid var(--ring);background:var(--card);color:var(--fg);
+      padding:.55rem .8rem;border-radius:12px;cursor:pointer;user-select:none;
+      transition:transform .08s ease, border-color .15s ease, background .15s ease
+    }
     .btn:hover{transform:translateY(-1px)} .btn:active{transform:translateY(0)}
     .accent{border-color:rgba(125,211,252,.35);box-shadow:inset 0 0 0 1px rgba(125,211,252,.15)}
     .search{display:flex;align-items:center;gap:.5rem;padding:.55rem .8rem;border-radius:12px;border:1px solid var(--ring);background:var(--card);width:min(700px,92%)}
     .search input{flex:1;border:0;outline:none;background:transparent;color:var(--fg);font-size:1rem}
+
     main{max-width:1100px;margin:0 auto;padding:1rem}
     .section{background:var(--card);border:1px solid var(--ring);border-radius:18px;padding:1rem 1.2rem;box-shadow:var(--shadow);margin-bottom:1rem}
     .section h2{margin:.2rem 0 .6rem;font-size:1.2rem}
-    .grid{display:grid;gap:1rem;grid-template-columns:1fr} @media (min-width:900px){.grid{grid-template-columns:1fr 1fr}}
-    .card{background:var(--card);border:1px solid var(--ring);border-radius:18px;padding:1rem 1.2rem;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .12s ease, box-shadow .2s ease, border-color .2s ease}
+    .grid{display:grid;gap:1rem;grid-template-columns:1fr}
+    @media (min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+
+    .card{
+      background:var(--card);border:1px solid var(--ring);border-radius:18px;
+      padding:1rem 1.2rem;box-shadow:var(--shadow);position:relative;overflow:hidden;
+      transition:transform .12s ease, box-shadow .2s ease, border-color .2s ease
+    }
     .card:hover{transform:translateY(-2px)}
     .badge{display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .6rem;border-radius:999px;background:var(--chip);border:1px solid var(--ring);font-weight:600;font-size:.85rem}
     .seqnum{display:inline-grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;color:#0b1220;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
-    .muted{color:var(--muted)} ul{margin:.4rem 0 .6rem 1.1rem}
+    .muted{color:var(--muted)}
+    ul{margin:.4rem 0 .6rem 1.1rem}
     .row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
     .toggle-row{display:flex;gap:.5rem;align-items:center;margin-top:.4rem}
     .pill{padding:.25rem .55rem;border-radius:999px;background:var(--chip);border:1px solid var(--ring);font-size:.85rem}
     .hidden{display:none !important}
+    mark{background:var(--mark-bg);padding:0 .2em;border-radius:4px;outline:1px solid var(--mark-border)}
+
+    .content{overflow:hidden;transition:max-height .25s ease}
+    .no-results{padding:1rem;text-align:center;color:var(--muted)}
+
     footer{text-align:center;padding:2rem 1rem;color:var(--muted)}
-    .link{color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(125,211,252,.4)} .link:hover{border-bottom-style:solid}
+    .link{color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(125,211,252,.4)}
+    .link:hover{border-bottom-style:solid}
   </style>
 </head>
 <body>
@@ -61,16 +87,21 @@
       <button id="toggleTheme" class="btn accent" title="Toggle light/dark">🌗 Theme</button>
       <button id="expandAll" class="btn" title="Expand all cards">Expand all</button>
       <button id="collapseAll" class="btn" title="Collapse all cards">Collapse all</button>
+      <a class="btn" href="./data/klein_sequences.json" download>⬇️ Download JSON</a>
     </div>
   </header>
 
   <main>
+    <!-- Mermaid diagram -->
     <section class="section">
       <h2>Pathway Flow</h2>
-      <div id="diagram"><!-- Mermaid SVG will be injected here --></div>
+      <div id="diagram"><!-- injected --></div>
     </section>
 
+    <!-- Cards -->
     <section class="grid" id="cards"></section>
+
+    <div id="empty" class="no-results hidden">No results. Try a different search term.</div>
   </main>
 
   <footer>
@@ -78,29 +109,51 @@
   </footer>
 
   <script>
-    // ----- THEME + MERMAID RENDERING -----
+    // ---------- THEME & MERMAID ----------
     const body = document.body;
     const stored = localStorage.getItem('theme') || 'dark';
     if (stored === 'light') body.classList.add('theme-light');
 
-  const MERMAID_SRC = `
+    const MERMAID_SRC = `
 flowchart TD
   A9["Sequence 9 — Seer"] -->|"Potion Advancement + Acting Method"| A8["Sequence 8 — Clown"]
-
   A9 --> B1["Divination and Perception"]
   B1 --> B2["Spirit Vision"]
   B1 --> B3["Dream Divination"]
   B1 --> B4["Ritual Magic Basic"]
-
   A8 --> C1["Dexterity and Control"]
   C1 --> C2["Balance and Agility"]
   C1 --> C3["Pain Suppression"]
   C1 --> C4["Emotion Masking"]
 `;
 
-    async function renderMermaid(themeMode) {
-      const theme = themeMode === 'light' ? 'default' : 'dark';
-      mermaid.initialize({ startOnLoad: false, theme });
+    function mermaidThemeConfig(mode){
+      if (mode === 'light') {
+        return {
+          startOnLoad:false, theme:'default',
+          themeVariables:{
+            fontFamily:'Inter,ui-sans-serif',
+            primaryColor:'#ffffff',
+            primaryTextColor:'#0f172a',
+            primaryBorderColor:'#cbd5e1',
+            lineColor:'#64748b'
+          }
+        }
+      }
+      return {
+        startOnLoad:false, theme:'dark',
+        themeVariables:{
+          fontFamily:'Inter,ui-sans-serif',
+          primaryColor:'#1f2937',
+          primaryTextColor:'#e6edf6',
+          primaryBorderColor:'#334155',
+          lineColor:'#8b95a7'
+        }
+      }
+    }
+
+    async function renderMermaid(mode){
+      mermaid.initialize(mermaidThemeConfig(mode));
       const { svg } = await mermaid.render('diagramGraph', MERMAID_SRC);
       document.getElementById('diagram').innerHTML = svg;
     }
@@ -109,38 +162,45 @@ flowchart TD
       body.classList.toggle('theme-light');
       const mode = body.classList.contains('theme-light') ? 'light' : 'dark';
       localStorage.setItem('theme', mode);
-      await renderMermaid(mode); // re-render diagram to match theme
+      await renderMermaid(mode);
     });
 
-    // ----- DATA + CARDS -----
+    // ---------- DATA & CARDS ----------
     async function loadData() {
       const res = await fetch('./data/klein_sequences.json');
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     }
 
-    function icon(name) {
+    function icon(name){
       const m = {
-        check: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-        warn:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M12 3l9 16H3L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        check:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        warn:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M12 3l9 16H3L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
       }; return m[name] || '';
     }
 
-    function seqHeader(seq) {
+    function seqHeader(seq){
       return `<div class="row">
         <span class="badge"><span class="seqnum">${seq.number}</span> ${seq.name}</span>
         <span class="pill">${seq.concept}</span>
+        <span class="pill muted" data-count>0 matches</span>
       </div>`;
     }
 
-    function list(items, type) {
-      return `<ul>${items.map(x => {
-        if (typeof x === 'string') return `<li>${icon(type==='warn'?'warn':'check')} ${x}</li>`;
-        return `<li>${icon('check')} <strong>${x.label}</strong> — ${x.desc}</li>`;
+    // wrap text in <span class="txt"> so we can highlight per-item
+    function list(items, type){
+      return `<ul>${items.map(x=>{
+        if (typeof x === 'string') {
+          const txt = x;
+          return `<li data-kind="tradeoff">${icon('warn')} <span class="txt" data-base="${txt.replace(/"/g,'&quot;')}">${txt}</span></li>`;
+        } else {
+          const txt = `<strong>${x.label}</strong> — ${x.desc}`;
+          return `<li data-kind="ability">${icon('check')} <span class="txt" data-base="${txt.replace(/"/g,'&quot;')}">${txt}</span></li>`;
+        }
       }).join('')}</ul>`;
     }
 
-    function card(seq) {
+    function card(seq){
       const id = `seq-${seq.number}`;
       return `<article class="card" data-seq="${seq.number}">
         ${seqHeader(seq)}
@@ -150,24 +210,29 @@ flowchart TD
           <button class="btn" data-toggle="${id}">Collapse</button>
         </div>
         <div id="${id}" class="content">
-          <div class="abilities">${list(seq.abilities, 'ok')}</div>
-          <div class="tradeoffs">${list(seq.tradeoffs, 'warn')}</div>
+          <div class="abilities">${list(seq.abilities,'ok')}</div>
+          <div class="tradeoffs">${list(seq.tradeoffs,'warn')}</div>
         </div>
       </article>`;
     }
 
-    function renderCards(data) {
+    function renderCards(data){
       const wrap = document.getElementById('cards');
       // Show 9 before 8
       wrap.innerHTML = data.sequences.sort((a,b)=>b.number - a.number).map(card).join('');
+
+      // expand/collapse with smooth max-height
       document.querySelectorAll('[data-toggle]').forEach(btn=>{
+        const target = document.getElementById(btn.dataset.toggle);
+        target.style.maxHeight = target.scrollHeight + 'px';
         btn.addEventListener('click', ()=>{
-          const target = document.getElementById(btn.dataset.toggle);
-          const open = !target.classList.contains('hidden');
-          target.classList.toggle('hidden');
+          const open = target.style.maxHeight && target.style.maxHeight !== '0px';
+          target.style.maxHeight = open ? '0px' : target.scrollHeight + 'px';
           btn.textContent = open ? 'Expand' : 'Collapse';
         });
       });
+
+      // show/hide sections per card
       document.querySelectorAll('input[data-show]').forEach(cb=>{
         cb.addEventListener('change', ()=>{
           const type = cb.dataset.show;
@@ -177,26 +242,61 @@ flowchart TD
       });
     }
 
-    function setupSearch() {
+    // search with per-item highlighting + counts
+    function setupSearch(){
       const input = document.getElementById('q');
-      input.addEventListener('input', ()=>{
+      const empty = document.getElementById('empty');
+
+      function highlight(el, q){
+        const base = el.dataset.base || el.textContent;
+        el.dataset.base = base;
+        if (!q){ el.innerHTML = base; return base.length > 0; }
+        const re = new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig');
+        el.innerHTML = base.replace(re,'<mark>$1</mark>');
+        return re.test(base);
+      }
+
+      function apply(){
         const q = input.value.trim().toLowerCase();
+        let anyVisible = false;
+
         document.querySelectorAll('#cards .card').forEach(card=>{
-          card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+          let matches = 0;
+
+          // reset and filter list items
+          card.querySelectorAll('.txt').forEach(txt=>{
+            const ok = q ? txt.dataset.base.toLowerCase().includes(q) : true;
+            txt.parentElement.style.display = ok ? '' : 'none';
+            if (ok) { highlight(txt, q); matches++; } else { txt.innerHTML = txt.dataset.base || txt.textContent; }
+          });
+
+          // show/hide card & update count
+          card.style.display = matches ? '' : 'none';
+          const count = card.querySelector('[data-count]');
+          if (count) count.textContent = (matches || 0) + ' match' + (matches===1?'':'es');
+          if (matches) anyVisible = true;
         });
-      });
+
+        empty.classList.toggle('hidden', anyVisible);
+      }
+
+      input.addEventListener('input', apply);
+      apply();
+
+      // expand/collapse all
       document.getElementById('expandAll').addEventListener('click', ()=>{
-        document.querySelectorAll('#cards .content').forEach(c=>c.classList.remove('hidden'));
+        document.querySelectorAll('#cards .content').forEach(c=>{ c.style.maxHeight = c.scrollHeight + 'px'; });
         document.querySelectorAll('[data-toggle]').forEach(b=>b.textContent='Collapse');
       });
       document.getElementById('collapseAll').addEventListener('click', ()=>{
-        document.querySelectorAll('#cards .content').forEach(c=>c.classList.add('hidden'));
+        document.querySelectorAll('#cards .content').forEach(c=>{ c.style.maxHeight = '0px'; });
         document.querySelectorAll('[data-toggle]').forEach(b=>b.textContent='Expand');
       });
     }
 
     (async function init(){
-      await renderMermaid(document.body.classList.contains('theme-light') ? 'light' : 'dark');
+      const mode = body.classList.contains('theme-light') ? 'light' : 'dark';
+      await renderMermaid(mode);
       const data = await loadData();
       renderCards(data);
       setupSearch();

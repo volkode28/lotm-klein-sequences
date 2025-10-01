@@ -1,0 +1,48 @@
+{
+  "pathway": "Seer",
+  "sequences": [
+    {
+      "number": 9,
+      "name": "Seer",
+      "concept": "Divination, subtle perception, ritual basics.",
+      "abilities": [
+        { "id": "intuition", "label": "Spiritual Intuition", "desc": "Vague danger sense; lifesaving but non-specific." },
+        { "id": "dream_divination", "label": "Dream Divination & Meditation", "desc": "Symbolic readings via tarot/pendulum/coins; interpretation-heavy." },
+        { "id": "spirit_vision", "label": "Spirit Vision", "desc": "Perceive auras, entities, curses, residues." },
+        { "id": "ritual_basic", "label": "Ritual Magic (Basic)", "desc": "Simple ceremonies/invocations/talismans; prep- and knowledge-dependent." },
+        { "id": "minor_luck", "label": "Minor Luck Nudges", "desc": "Slight, unreliable outcome nudges via divination prep." }
+      ],
+      "tradeoffs": [
+        "Physically fragile; mundane weapons are lethal.",
+        "Divination results are cryptic; misreads can mislead.",
+        "Overuse strains psyche; ritual mistakes are dangerous.",
+        "Not a direct combat class."
+      ]
+    },
+    {
+      "number": 8,
+      "name": "Clown",
+      "concept": "Extreme body control + emotional regulation; deceptive, flexible fighter.",
+      "abilities": [
+        { "id": "balance", "label": "Balance & Agility", "desc": "Tightrope-level movement; improved evasion/acrobatics." },
+        { "id": "pain_suppression", "label": "Pain Suppression", "desc": "Sustain combat performance while injured." },
+        { "id": "emotion_masking", "label": "Emotion Masking", "desc": "Suppress/alter outward emotion (calm, fearless)." },
+        { "id": "reflexes", "label": "Enhanced Reflexes/Dexterity", "desc": "Faster reactions and precise execution." },
+        { "id": "spirit_control", "label": "Improved Spirit Control", "desc": "More stable spirit vision/channeling." },
+        { "id": "acting_method", "label": "Acting Method Synergy", "desc": "Role immersion helps digest potion safely." }
+      ],
+      "tradeoffs": [
+        "Still not durable; firearms/explosives remain dangerous.",
+        "Risk of losing control (hysteria/detachment) if poorly digested.",
+        "Requires wit/positioning; cannot brute-force elites.",
+        "Advancements add mental burden without disciplined rituals/acting."
+      ]
+    }
+  ],
+  "progression": {
+    "from": 9,
+    "to": 8,
+    "method": "Potion Advancement + Acting Method",
+    "note": "Stays within Seer Pathway; builds combat viability without sacrificing divination utility."
+  }
+}

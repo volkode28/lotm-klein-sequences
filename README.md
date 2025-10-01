@@ -11,20 +11,21 @@ It matches the scope of the story around **Episode 9: “Party”** — covering
 
 ```mermaid
 flowchart LR
-    subgraph Seer_Pathway [Seer Pathway]
-        A9[Sequence 9: Seer]
-        A8[Sequence 8: Clown]
-    end
+  subgraph Seer_Pathway [Seer Pathway]
+    A9[Sequence 9: Seer]
+    A8[Sequence 8: Clown]
+  end
 
-    A9 -->|Potion Advancement<br>+ Acting Method| A8
+  A9 -->|Potion Advancement + Acting Method| A8
 
-    %% Subdetails
-    A9 --> B1[Divination & Perception]
-    B1 --> B2[Spirit Vision]
-    B1 --> B3[Dream Divination]
-    B1 --> B4[Ritual Magic (Basic)]
+  %% Subdetails
+  A9 --> B1[Divination & Perception]
+  B1 --> B2[Spirit Vision]
+  B1 --> B3[Dream Divination]
+  B1 --> B4[Ritual Magic (Basic)]
 
-    A8 --> C1[Dexterity & Control]
-    C1 --> C2[Balance & Agility]
-    C1 --> C3[Pain Suppression]
-    C1 --> C4[Emotion Masking]
+  A8 --> C1[Dexterity & Control]
+  C1 --> C2[Balance & Agility]
+  C1 --> C3[Pain Suppression]
+  C1 --> C4[Emotion Masking]
+```

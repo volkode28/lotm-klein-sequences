@@ -2,118 +2,216 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>LoTM – Klein’s Sequences (9→8)</title>
+  <title>LoTM — Seer Pathway (Klein 9→8)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Fonts with a Victorian/occult feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Mermaid (for the pathway graph) -->
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <style>
-    :root {
-      --bg: #0b1220; --bg-soft:#0f172a; --fg:#e6edf6; --muted:#93a4b8;
-      --card: rgba(255,255,255,0.06); --ring: rgba(255,255,255,0.12);
-      --accent:#7dd3fc; --accent-2:#c084fc; --chip: rgba(255,255,255,0.08);
-      --shadow: 0 6px 24px rgba(0,0,0,.25);
-      --mark-bg: #f59e0b33;
-      --mark-border: #f59e0b88;
+    /* ---------- THEME ---------- */
+    :root{
+      --bg:#0b0f16;           /* midnight indigo */
+      --ink:#e8e4d9;          /* parchment ink */
+      --muted:#adb0b7;
+      --parch:#131821e6;      /* translucent parchment */
+      --border:#2a303b;
+      --accent:#d4aa70;       /* brass */
+      --accent-2:#7dd3fc;     /* ethereal blue */
+      --glow: 0 0 0px rgba(212,170,112,0.0);
+      --card-shadow: 0 12px 40px rgba(0,0,0,.35);
     }
-    .theme-light {
-      --bg:#f7fafc; --bg-soft:#eef2f7; --fg:#0f172a; --muted:#5b6b7f;
-      --card:rgba(255,255,255,.92); --ring: rgba(15,23,42,.08);
-      --accent:#2563eb; --accent-2:#9333ea; --chip: rgba(2,6,23,.06);
-      --shadow: 0 6px 24px rgba(0,0,0,.08);
-      --mark-bg:#fde68a80; --mark-border:#f59e0b99;
+    .theme-dawn{
+      --bg:#f6f2e9; --ink:#141419; --muted:#50525a;
+      --parch:#fffdf7e6; --border:#ded7c7; --accent:#89551f; --accent-2:#3a6ea6;
+      --glow: 0 0 30px rgba(137,85,31,.25);
+      --card-shadow: 0 12px 40px rgba(0,0,0,.08);
     }
 
     *{box-sizing:border-box}
-    html,body{
-      height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--fg);
+    html,body{height:100%;margin:0}
+    body{
+      color:var(--ink);
+      font-family: "Crimson Pro", ui-serif, Georgia, serif;
       background:
-        radial-gradient(1200px 600px at -10% -10%, rgba(125,211,252,.15), transparent 60%),
-        radial-gradient(900px 500px at 110% -10%, rgba(192,132,252,.15), transparent 60%),
+        radial-gradient(1200px 700px at -15% -20%, rgba(125,211,252,.08), transparent 60%),
+        radial-gradient(900px 500px at 120% -10%, rgba(212,170,112,.12), transparent 60%),
         var(--bg);
+      overflow-x:hidden;
     }
-    header{padding:2rem 1rem 1rem;text-align:center}
-    .title{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;letter-spacing:.2px;margin:0 0 .3rem}
-    .subtitle{color:var(--muted);margin:.25rem 0 0}
-    .toolbar{display:flex;gap:.75rem;justify-content:center;align-items:center;margin-top:1rem;flex-wrap:wrap}
-    .btn,.chip{
-      border:1px solid var(--ring);background:var(--card);color:var(--fg);
-      padding:.55rem .8rem;border-radius:12px;cursor:pointer;user-select:none;
-      transition:transform .08s ease, border-color .15s ease, background .15s ease
-    }
-    .btn:hover{transform:translateY(-1px)} .btn:active{transform:translateY(0)}
-    .accent{border-color:rgba(125,211,252,.35);box-shadow:inset 0 0 0 1px rgba(125,211,252,.15)}
-    .search{display:flex;align-items:center;gap:.5rem;padding:.55rem .8rem;border-radius:12px;border:1px solid var(--ring);background:var(--card);width:min(700px,92%)}
-    .search input{flex:1;border:0;outline:none;background:transparent;color:var(--fg);font-size:1rem}
 
-    main{max-width:1100px;margin:0 auto;padding:1rem}
-    .section{background:var(--card);border:1px solid var(--ring);border-radius:18px;padding:1rem 1.2rem;box-shadow:var(--shadow);margin-bottom:1rem}
-    .section h2{margin:.2rem 0 .6rem;font-size:1.2rem}
-    .grid{display:grid;gap:1rem;grid-template-columns:1fr}
+    /* Starfield canvas */
+    #sky{position:fixed;inset:0;z-index:-2;opacity:.6}
+    /* Subtle film grain / smoke */
+    .mist::before{
+      content:""; position:fixed; inset:-10vh -10vw; z-index:-1; pointer-events:none;
+      background:
+        radial-gradient(50% 30% at 20% -10%, rgba(255,255,255,.07), transparent 60%),
+        radial-gradient(45% 35% at 120% 0%, rgba(125,211,252,.06), transparent 70%),
+        radial-gradient(35% 25% at -10% 120%, rgba(212,170,112,.06), transparent 70%);
+      animation: drift 18s ease-in-out infinite alternate;
+      filter: blur(10px);
+    }
+    @keyframes drift{
+      from{transform:translate3d(0,0,0) scale(1)}
+      to  {transform:translate3d(2vw,-1vh,0) scale(1.05)}
+    }
+
+    header{padding:2.2rem 1rem 1rem;text-align:center}
+    .title{
+      font-family:"Cinzel", ui-serif, Georgia, serif;
+      letter-spacing:.5px; font-weight:900;
+      font-size:clamp(1.6rem,4vw,2.6rem); margin:0 0 .35rem;
+      text-shadow: var(--glow);
+    }
+    .subtitle{margin:.25rem 0 0; color:var(--muted)}
+    .toolbar{display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; margin-top:1rem}
+
+    .btn, .field{
+      font-family:"Cinzel", ui-serif, Georgia, serif;
+      border:1px solid var(--border); background:var(--parch);
+      color:var(--ink); padding:.55rem .8rem; border-radius:10px;
+      box-shadow: var(--card-shadow); backdrop-filter: blur(2px);
+    }
+    .btn{cursor:pointer; transition: transform .08s ease, box-shadow .2s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .field{display:flex; align-items:center; gap:.5rem; min-width:min(700px,92%)}
+    .field input{flex:1; border:0; outline:none; background:transparent; color:var(--ink); font-size:1rem}
+
+    main{max-width:1100px; margin:0 auto; padding:1rem}
+
+    .section{
+      background:var(--parch); border:1px solid var(--border);
+      border-radius:18px; padding:1rem 1.2rem; box-shadow:var(--card-shadow);
+      margin-bottom:1rem; position:relative;
+    }
+    .section h2{
+      font-family:"Cinzel"; margin:.1rem 0 .8rem; letter-spacing:.4px;
+    }
+
+    /* Tarot cards (flip) */
+    .grid{display:grid; gap:1rem; grid-template-columns:1fr}
     @media (min-width:900px){.grid{grid-template-columns:1fr 1fr}}
-
-    .card{
-      background:var(--card);border:1px solid var(--ring);border-radius:18px;
-      padding:1rem 1.2rem;box-shadow:var(--shadow);position:relative;overflow:hidden;
-      transition:transform .12s ease, box-shadow .2s ease, border-color .2s ease
+    .tarot{perspective:1000px}
+    .tarot .inner{
+      position:relative; transform-style:preserve-3d; transition: transform .7s cubic-bezier(.2,.7,.2,1);
     }
-    .card:hover{transform:translateY(-2px)}
-    .badge{display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .6rem;border-radius:999px;background:var(--chip);border:1px solid var(--ring);font-weight:600;font-size:.85rem}
-    .seqnum{display:inline-grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;color:#0b1220;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+    .tarot.flipped .inner{transform: rotateY(180deg)}
+    .face{
+      background:var(--parch); border:1px solid var(--border); border-radius:18px;
+      padding:1rem 1.2rem; box-shadow:var(--card-shadow); min-height:360px;
+      position:relative;
+      backface-visibility:hidden;
+    }
+    .back{transform: rotateY(180deg)}
+    .frame{
+      position:absolute; inset:8px; border:1px dashed rgba(212,170,112,.45); border-radius:14px;
+    }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.35rem .7rem; border-radius:999px;
+      border:1px solid var(--border); background:linear-gradient(135deg, rgba(212,170,112,.16), rgba(125,211,252,.12));
+      font-weight:600; font-family:"Cinzel";
+    }
+    .sigil{
+      display:inline-grid; place-items:center; width:1.6rem; height:1.6rem; border-radius:50%;
+      background: radial-gradient(circle at 70% 30%, var(--accent), var(--accent-2));
+      color:#0b0f16; font-weight:900; font-family:"Cinzel";
+      box-shadow: 0 0 0 2px #0b0f16, 0 0 0 3px var(--border);
+    }
     .muted{color:var(--muted)}
-    ul{margin:.4rem 0 .6rem 1.1rem}
-    .row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
-    .toggle-row{display:flex;gap:.5rem;align-items:center;margin-top:.4rem}
-    .pill{padding:.25rem .55rem;border-radius:999px;background:var(--chip);border:1px solid var(--ring);font-size:.85rem}
-    .hidden{display:none !important}
-    mark{background:var(--mark-bg);padding:0 .2em;border-radius:4px;outline:1px solid var(--mark-border)}
+    ul{margin:.5rem 0 .6rem 1.1rem}
+    .chip{display:inline-block; padding:.2rem .5rem; border-radius:999px; border:1px solid var(--border); background:rgba(0,0,0,.06); font-size:.85rem}
 
-    .content{overflow:hidden;transition:max-height .25s ease}
-    .no-results{padding:1rem;text-align:center;color:var(--muted)}
+    .controls{display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; margin:.5rem 0 .2rem}
+    .switch input{accent-color:var(--accent)}
 
-    footer{text-align:center;padding:2rem 1rem;color:var(--muted)}
-    .link{color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(125,211,252,.4)}
-    .link:hover{border-bottom-style:solid}
+    /* Divination toy */
+    .divine{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center}
+    .divine input{min-width:260px}
+    .omen{font-family:"Cinzel"; padding:.45rem .7rem; border-radius:10px; border:1px solid var(--border)}
+    .good{background:rgba(52,211,153,.15)}
+    .bad{background:rgba(244,63,94,.15)}
+    .meh{background:rgba(234,179,8,.15)}
+
+    footer{color:var(--muted); text-align:center; padding:2rem 1rem}
+
+    mark{background: rgba(212,170,112,.25); padding:0 .2em; border-radius:4px}
+
+    /* Mermaid container styling */
+    #diagram svg { border-radius:12px; box-shadow: var(--card-shadow); }
   </style>
 </head>
-<body>
+<body class="mist">
+  <canvas id="sky"></canvas>
+
   <header>
-    <h1 class="title">Lord of the Mysteries — Klein’s Sequences <span style="opacity:.9">(9 → 8)</span></h1>
-    <p class="subtitle">Seer Pathway around <em>Episode 9: “Party”</em>. Search, compare, and switch themes.</p>
+    <h1 class="title">Lord of the Mysteries — Seer Pathway <span style="opacity:.85">(Klein 9 → 8)</span></h1>
+    <p class="subtitle">Victorian occult vibes • tarot-like cards • spoiler-safe</p>
     <div class="toolbar">
-      <label class="search" title="Search abilities and trade-offs">
+      <label class="field" title="Search abilities & trade-offs">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.2-4.2M17 10.5A6.5 6.5 0 1 1 4 10.5 6.5 6.5 0 0 1 17 10.5Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <input id="q" placeholder="Search: e.g., spirit vision, pain, agility…" />
+        <input id="q" placeholder="Augury: spirit vision, pain, agility… (type to filter)" />
       </label>
-      <button id="toggleTheme" class="btn accent" title="Toggle light/dark">🌗 Theme</button>
-      <button id="expandAll" class="btn" title="Expand all cards">Expand all</button>
-      <button id="collapseAll" class="btn" title="Collapse all cards">Collapse all</button>
-      <a class="btn" href="./data/klein_sequences.json" download>⬇️ Download JSON</a>
+      <button id="theme" class="btn">🕯️ Candle</button>
+      <button id="expand" class="btn">Reveal all</button>
+      <button id="collapse" class="btn">Hide all</button>
+      <a class="btn" href="./data/klein_sequences.json" download>📜 Download data</a>
     </div>
   </header>
 
   <main>
-    <!-- Mermaid diagram -->
+    <!-- Flow (Mermaid) -->
     <section class="section">
-      <h2>Pathway Flow</h2>
+      <h2>Ritual Flow</h2>
       <div id="diagram"><!-- injected --></div>
+      <p class="muted" style="margin:.6rem 0 0">Tip: click 🕯️ to switch Dawn/Midnight. Diagram follows the candle.</p>
     </section>
 
-    <!-- Cards -->
-    <section class="grid" id="cards"></section>
+    <!-- Divination toy -->
+    <section class="section">
+      <h2>Quick Divination</h2>
+      <div class="divine">
+        <input id="question" class="btn" placeholder="Ask a yes/no question (spoiler-safe)…">
+        <button id="cast" class="btn">Cast 3 coins</button>
+        <span id="omen" class="omen muted">Awaiting augury…</span>
+      </div>
+    </section>
 
-    <div id="empty" class="no-results hidden">No results. Try a different search term.</div>
+    <!-- Tarot cards from JSON -->
+    <section class="grid" id="cards"></section>
+    <div id="empty" class="section" style="display:none;text-align:center">No matches. Try a different query.</div>
   </main>
 
   <footer>
-    Built with plain HTML/CSS/JS. Data from <code>docs/data/klein_sequences.json</code>.
+    Built with plain HTML/CSS/JS. Data: <code>docs/data/klein_sequences.json</code>. No spoilers beyond 9→8.
   </footer>
 
   <script>
-    // ---------- THEME & MERMAID ----------
-    const body = document.body;
-    const stored = localStorage.getItem('theme') || 'dark';
-    if (stored === 'light') body.classList.add('theme-light');
+    /* ---------- STARFIELD ---------- */
+    const sky = document.getElementById('sky');
+    const ctx = sky.getContext('2d');
+    function fit(){ sky.width = innerWidth; sky.height = innerHeight }
+    addEventListener('resize', fit); fit();
+    const stars = Array.from({length: 120}, () => ({
+      x: Math.random()*sky.width,
+      y: Math.random()*sky.height,
+      z: Math.random()*0.7 + 0.3,
+      v: Math.random()*0.25 + 0.05
+    }));
+    function draw(){
+      ctx.clearRect(0,0,sky.width,sky.height);
+      for(const s of stars){
+        ctx.globalAlpha = .6*s.z;
+        ctx.fillStyle = '#9fb7d4';
+        ctx.fillRect(s.x, s.y, 1.2*s.z, 1.2*s.z);
+        s.x += s.v*s.z; if(s.x>sky.width){ s.x=0; s.y=Math.random()*sky.height }
+      }
+      requestAnimationFrame(draw);
+    } draw();
 
+    /* ---------- MERMAID (theme-aware) ---------- */
     const MERMAID_SRC = `
 flowchart TD
   A9["Sequence 9 — Seer"] -->|"Potion Advancement + Acting Method"| A8["Sequence 8 — Clown"]
@@ -126,180 +224,155 @@ flowchart TD
   C1 --> C3["Pain Suppression"]
   C1 --> C4["Emotion Masking"]
 `;
-
-    function mermaidThemeConfig(mode){
-      if (mode === 'light') {
-        return {
-          startOnLoad:false, theme:'default',
-          themeVariables:{
-            fontFamily:'Inter,ui-sans-serif',
-            primaryColor:'#ffffff',
-            primaryTextColor:'#0f172a',
-            primaryBorderColor:'#cbd5e1',
-            lineColor:'#64748b'
-          }
-        }
-      }
+    function mermaidCfg(mode){
+      const light = document.body.classList.contains('theme-dawn');
       return {
-        startOnLoad:false, theme:'dark',
-        themeVariables:{
-          fontFamily:'Inter,ui-sans-serif',
-          primaryColor:'#1f2937',
-          primaryTextColor:'#e6edf6',
-          primaryBorderColor:'#334155',
+        startOnLoad:false,
+        theme: light ? 'default' : 'dark',
+        themeVariables: light ? {
+          fontFamily:'Cinzel, Crimson Pro, serif',
+          primaryColor:'#fffdf7',
+          primaryTextColor:'#141419',
+          primaryBorderColor:'#ded7c7',
+          lineColor:'#6b7280'
+        } : {
+          fontFamily:'Cinzel, Crimson Pro, serif',
+          primaryColor:'#12161f',
+          primaryTextColor:'#e8e4d9',
+          primaryBorderColor:'#2a303b',
           lineColor:'#8b95a7'
         }
       }
     }
-
-    async function renderMermaid(mode){
-      mermaid.initialize(mermaidThemeConfig(mode));
-      const { svg } = await mermaid.render('diagramGraph', MERMAID_SRC);
+    async function renderMermaid(){
+      mermaid.initialize(mermaidCfg());
+      const { svg } = await mermaid.render('ritualGraph', MERMAID_SRC);
       document.getElementById('diagram').innerHTML = svg;
     }
 
-    document.getElementById('toggleTheme').addEventListener('click', async () => {
-      body.classList.toggle('theme-light');
-      const mode = body.classList.contains('theme-light') ? 'light' : 'dark';
-      localStorage.setItem('theme', mode);
-      await renderMermaid(mode);
-    });
-
-    // ---------- DATA & CARDS ----------
-    async function loadData() {
+    /* ---------- DATA & TAROT CARDS ---------- */
+    async function loadData(){
       const res = await fetch('./data/klein_sequences.json');
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      if(!res.ok) throw new Error('HTTP '+res.status);
       return res.json();
     }
 
-    function icon(name){
-      const m = {
-        check:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-        warn:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M12 3l9 16H3L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-      }; return m[name] || '';
-    }
-
-    function seqHeader(seq){
-      return `<div class="row">
-        <span class="badge"><span class="seqnum">${seq.number}</span> ${seq.name}</span>
-        <span class="pill">${seq.concept}</span>
-        <span class="pill muted" data-count>0 matches</span>
-      </div>`;
-    }
-
-    // wrap text in <span class="txt"> so we can highlight per-item
-    function list(items, type){
-      return `<ul>${items.map(x=>{
-        if (typeof x === 'string') {
-          const txt = x;
-          return `<li data-kind="tradeoff">${icon('warn')} <span class="txt" data-base="${txt.replace(/"/g,'&quot;')}">${txt}</span></li>`;
-        } else {
-          const txt = `<strong>${x.label}</strong> — ${x.desc}`;
-          return `<li data-kind="ability">${icon('check')} <span class="txt" data-base="${txt.replace(/"/g,'&quot;')}">${txt}</span></li>`;
-        }
-      }).join('')}</ul>`;
-    }
-
-    function card(seq){
-      const id = `seq-${seq.number}`;
-      return `<article class="card" data-seq="${seq.number}">
-        ${seqHeader(seq)}
-        <div class="toggle-row">
-          <label class="chip"><input type="checkbox" data-show="abilities" checked> Show abilities</label>
-          <label class="chip"><input type="checkbox" data-show="tradeoffs" checked> Show trade-offs</label>
-          <button class="btn" data-toggle="${id}">Collapse</button>
+    function cardFace(seq){
+      // front (tarot face)
+      const front = `
+        <div class="face front">
+          <div class="frame"></div>
+          <span class="badge"><span class="sigil">${seq.number}</span> ${seq.name}</span>
+          <p class="muted" style="margin:.6rem 0 0">${seq.concept}</p>
+          <div style="position:absolute;bottom:1rem;left:0;right:0;text-align:center;color:var(--muted)">
+            click to flip ↻
+          </div>
         </div>
-        <div id="${id}" class="content">
-          <div class="abilities">${list(seq.abilities,'ok')}</div>
-          <div class="tradeoffs">${list(seq.tradeoffs,'warn')}</div>
+      `;
+      // back (details)
+      const ab = seq.abilities.map(a=>`<li><strong>${a.label}</strong> — ${a.desc}</li>`).join('');
+      const tr = seq.tradeoffs.map(t=>`<li>${t}</li>`).join('');
+      const back = `
+        <div class="face back">
+          <div class="frame"></div>
+          <div class="controls">
+            <span class="chip">Abilities</span>
+          </div>
+          <ul>${ab}</ul>
+          <div class="controls" style="margin-top:.6rem"><span class="chip">Trade-offs</span></div>
+          <ul>${tr}</ul>
+          <div style="position:absolute;bottom:.8rem;left:0;right:0;text-align:center;color:var(--muted)">
+            click to flip ↺
+          </div>
         </div>
-      </article>`;
+      `;
+      return `<article class="tarot"><div class="inner">${front}${back}</div></article>`;
     }
 
     function renderCards(data){
       const wrap = document.getElementById('cards');
-      // Show 9 before 8
-      wrap.innerHTML = data.sequences.sort((a,b)=>b.number - a.number).map(card).join('');
-
-      // expand/collapse with smooth max-height
-      document.querySelectorAll('[data-toggle]').forEach(btn=>{
-        const target = document.getElementById(btn.dataset.toggle);
-        target.style.maxHeight = target.scrollHeight + 'px';
-        btn.addEventListener('click', ()=>{
-          const open = target.style.maxHeight && target.style.maxHeight !== '0px';
-          target.style.maxHeight = open ? '0px' : target.scrollHeight + 'px';
-          btn.textContent = open ? 'Expand' : 'Collapse';
-        });
-      });
-
-      // show/hide sections per card
-      document.querySelectorAll('input[data-show]').forEach(cb=>{
-        cb.addEventListener('change', ()=>{
-          const type = cb.dataset.show;
-          const content = cb.closest('.card').querySelector('.'+type);
-          if (content) content.classList.toggle('hidden', !cb.checked);
-        });
+      wrap.innerHTML = data.sequences.sort((a,b)=>b.number-a.number).map(cardFace).join('');
+      // flip interaction
+      wrap.querySelectorAll('.tarot').forEach(el=>{
+        el.addEventListener('click', ()=> el.classList.toggle('flipped'));
       });
     }
 
-    // search with per-item highlighting + counts
+    /* ---------- SEARCH (augury) ---------- */
     function setupSearch(){
       const input = document.getElementById('q');
       const empty = document.getElementById('empty');
-
-      function highlight(el, q){
-        const base = el.dataset.base || el.textContent;
-        el.dataset.base = base;
-        if (!q){ el.innerHTML = base; return base.length > 0; }
-        const re = new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig');
-        el.innerHTML = base.replace(re,'<mark>$1</mark>');
-        return re.test(base);
-      }
-
       function apply(){
         const q = input.value.trim().toLowerCase();
-        let anyVisible = false;
-
-        document.querySelectorAll('#cards .card').forEach(card=>{
-          let matches = 0;
-
-          // reset and filter list items
-          card.querySelectorAll('.txt').forEach(txt=>{
-            const ok = q ? txt.dataset.base.toLowerCase().includes(q) : true;
-            txt.parentElement.style.display = ok ? '' : 'none';
-            if (ok) { highlight(txt, q); matches++; } else { txt.innerHTML = txt.dataset.base || txt.textContent; }
-          });
-
-          // show/hide card & update count
-          card.style.display = matches ? '' : 'none';
-          const count = card.querySelector('[data-count]');
-          if (count) count.textContent = (matches || 0) + ' match' + (matches===1?'':'es');
-          if (matches) anyVisible = true;
+        let any=false;
+        document.querySelectorAll('#cards .tarot').forEach(card=>{
+          const text = card.textContent.toLowerCase();
+          const show = !q || text.includes(q);
+          card.style.display = show ? '' : 'none';
+          if(show) any=true;
         });
-
-        empty.classList.toggle('hidden', anyVisible);
+        empty.style.display = any ? 'none' : '';
       }
+      input.addEventListener('input', apply); apply();
+    }
 
-      input.addEventListener('input', apply);
-      apply();
-
-      // expand/collapse all
-      document.getElementById('expandAll').addEventListener('click', ()=>{
-        document.querySelectorAll('#cards .content').forEach(c=>{ c.style.maxHeight = c.scrollHeight + 'px'; });
-        document.querySelectorAll('[data-toggle]').forEach(b=>b.textContent='Collapse');
-      });
-      document.getElementById('collapseAll').addEventListener('click', ()=>{
-        document.querySelectorAll('#cards .content').forEach(c=>{ c.style.maxHeight = '0px'; });
-        document.querySelectorAll('[data-toggle]').forEach(b=>b.textContent='Expand');
+    /* ---------- DIVINATION (3 coins) ---------- */
+    function setupDivination(){
+      const q = document.getElementById('question');
+      const btn = document.getElementById('cast');
+      const omen = document.getElementById('omen');
+      const lines = {
+        good: [
+          "The Fool smiles. Fortune favors a careful step.",
+          "Threads align — seize the opportunity.",
+          "Auspicious winds from the gray fog."
+        ],
+        bad: [
+          "Whispers warn: not today.",
+          "The candle sputters — postpone the ritual.",
+          "An ill tide gathers beneath the surface."
+        ],
+        meh: [
+          "Veiled… more offerings (info) required.",
+          "Unclear omens — act small, observe much.",
+          "The cards refuse certainty; try again later."
+        ]
+      };
+      btn.addEventListener('click', ()=>{
+        // tally of three coin flips (H=1, T=0)
+        let heads = 0; for(let i=0;i<3;i++) heads += Math.random()<.5 ? 0 : 1;
+        let cls='meh', msg=lines.meh[Math.floor(Math.random()*lines.meh.length)];
+        if(heads===3){ cls='good'; msg=lines.good[Math.floor(Math.random()*lines.good.length)]; }
+        else if(heads===0){ cls='bad'; msg=lines.bad[Math.floor(Math.random()*lines.bad.length)]; }
+        else if(heads===2){ cls='good'; }
+        else if(heads===1){ cls='meh'; }
+        omen.className = 'omen '+cls; omen.textContent = msg;
       });
     }
 
+    /* ---------- THEME & TOGGLES ---------- */
+    function setupUI(){
+      const t = document.getElementById('theme');
+      t.addEventListener('click', async ()=>{
+        document.body.classList.toggle('theme-dawn');
+        await renderMermaid();
+      });
+      document.getElementById('expand').addEventListener('click', ()=>{
+        document.querySelectorAll('.tarot').forEach(e=>e.classList.add('flipped'));
+      });
+      document.getElementById('collapse').addEventListener('click', ()=>{
+        document.querySelectorAll('.tarot').forEach(e=>e.classList.remove('flipped'));
+      });
+    }
+
+    /* ---------- BOOT ---------- */
     (async function init(){
-      const mode = body.classList.contains('theme-light') ? 'light' : 'dark';
-      await renderMermaid(mode);
+      await renderMermaid();
       const data = await loadData();
       renderCards(data);
       setupSearch();
+      setupDivination();
+      setupUI();
     })();
   </script>
 </body>
